@@ -11,7 +11,7 @@ the igraph and the graphNEL objects."><meta property="og:image" content="https:/
 
     <a class="navbar-brand me-2" href="../index.html">igraph</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.3.9044</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.3.9059</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,14 +25,16 @@ the igraph and the graphNEL objects."><meta property="og:image" content="https:/
     <li><a class="dropdown-item" href="../articles/igraph_ES.html">Intro (Español)</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
-<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/installation-troubleshooting.html">Installation FAQs</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/index.html">All articles</a></li>
   </ul></li>
-      </ul><ul class="navbar-nav"><li class="nav-item"><a class="external-link nav-link" href="https://github.com/igraph/rigraph/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
+      </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/igraph/rigraph/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul></div>
 
 
@@ -80,7 +82,7 @@ will be used for this purpose.</p>
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="graph_from_graphnel.html">graph_from_graphnel()</a></code> for the other direction,
 <code><a href="as_adjacency_matrix.html">as_adj()</a></code>, <code><a href="graph_from_adjacency_matrix.html">graph_from_adjacency_matrix()</a></code>,
-<code><a href="as_adj_list.html">as_adj_list()</a></code> and <code><a href="graph.adjlist.html">graph.adjlist()</a></code> for
+<code><a href="as_adj_list.html">as_adj_list()</a></code> and <code><a href="graph_from_adj_list.html">graph_from_adj_list()</a></code> for
 other graph representations.</p>
 <p>Other conversion:
 <code><a href="as.directed.html">as.directed</a>()</code>,
@@ -103,10 +105,10 @@ other graph representations.</p>
 <span class="r-in"><span><span class="va">GNEL</span> <span class="op">&lt;-</span> <span class="fu">as_graphnel</span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">g2</span> <span class="op">&lt;-</span> <span class="fu"><a href="graph_from_graphnel.html">graph_from_graphnel</a></span><span class="op">(</span><span class="va">GNEL</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">g2</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IGRAPH d60e8a1 UNW- 10 10 -- Ring graph</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IGRAPH af9c3f7 UNW- 10 10 -- Ring graph</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> + attr: name (g/c), mutual (g/l), circular (g/l), name (v/c), weight</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> | (e/n)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + edges from d60e8a1 (vertex names):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + edges from af9c3f7 (vertex names):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] a--b a--j b--c c--d d--e e--f f--g g--h h--i i--j</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Directed</span></span></span>
@@ -115,9 +117,9 @@ other graph representations.</p>
 <span class="r-in"><span><span class="va">GNEL2</span> <span class="op">&lt;-</span> <span class="fu">as_graphnel</span><span class="op">(</span><span class="va">g3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">g4</span> <span class="op">&lt;-</span> <span class="fu"><a href="graph_from_graphnel.html">graph_from_graphnel</a></span><span class="op">(</span><span class="va">GNEL2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">g4</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IGRAPH 24af972 DNW- 10 9 -- In-star</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IGRAPH 6abca4c DNW- 10 9 -- In-star</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> + attr: name (g/c), mode (g/c), center (g/n), name (v/c), weight (e/n)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + edges from 24af972 (vertex names):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + edges from 6abca4c (vertex names):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] b-&gt;a c-&gt;a d-&gt;a e-&gt;a f-&gt;a g-&gt;a h-&gt;a i-&gt;a j-&gt;a</span>
 </code></pre></div>
     </div>

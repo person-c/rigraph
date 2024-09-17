@@ -9,7 +9,7 @@ between different kinds."><meta property="og:image" content="https://r.igraph.or
 
     <a class="navbar-brand me-2" href="../index.html">igraph</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.3.9044</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.3.9059</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,14 +23,16 @@ between different kinds."><meta property="og:image" content="https://r.igraph.or
     <li><a class="dropdown-item" href="../articles/igraph_ES.html">Intro (Español)</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
-<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/installation-troubleshooting.html">Installation FAQs</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/index.html">All articles</a></li>
   </ul></li>
-      </ul><ul class="navbar-nav"><li class="nav-item"><a class="external-link nav-link" href="https://github.com/igraph/rigraph/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
+      </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/igraph/rigraph/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul></div>
 
 
@@ -68,7 +70,7 @@ as the <code>name</code> vertex attribute.</p></dd>
 
 <dt id="arg-edges">edges<a class="anchor" aria-label="anchor" href="#arg-edges"></a></dt>
 <dd><p>A vector giving the edges of the graph, the same way as for the
-regular <code><a href="graph.html">graph()</a></code> function. It is checked that the edges indeed
+regular <code><a href="make_graph.html">make_graph()</a></code> function. It is checked that the edges indeed
 connect vertices of different kind, according to the supplied <code>types</code>
 vector. The vector may be a string vector if <code>types</code> is a named vector.</p></dd>
 
@@ -103,7 +105,7 @@ the type for each vertex name that occurs in <code>edges</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="graph.html">graph()</a></code> to create one-mode networks</p>
+    <div class="dont-index"><p><code><a href="make_graph.html">make_graph()</a></code> to create one-mode networks</p>
 <p>Bipartite graphs
 <code><a href="bipartite_mapping.html">bipartite_mapping</a>()</code>,
 <code><a href="bipartite_projection.html">bipartite_projection</a>()</code>,
@@ -119,9 +121,9 @@ the type for each vertex name that occurs in <code>edges</code>.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu">make_bipartite_graph</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">1</span>, length.out <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">g</span>, v <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IGRAPH 22cf14d U--B 10 5 -- </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IGRAPH bc3f198 U--B 10 5 -- </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> + attr: type (v/l)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + edges from 22cf14d:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + edges from bc3f198:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1-- 2 3-- 4 5-- 6 7-- 8 9--10</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

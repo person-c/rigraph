@@ -17,7 +17,7 @@ name vertex attribute will be added."><meta property="og:image" content="https:/
 
     <a class="navbar-brand me-2" href="../index.html">igraph</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.3.9044</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.3.9059</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,14 +31,16 @@ name vertex attribute will be added."><meta property="og:image" content="https:/
     <li><a class="dropdown-item" href="../articles/igraph_ES.html">Intro (Español)</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
-<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/installation-troubleshooting.html">Installation FAQs</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/index.html">All articles</a></li>
   </ul></li>
-      </ul><ul class="navbar-nav"><li class="nav-item"><a class="external-link nav-link" href="https://github.com/igraph/rigraph/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
+      </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/igraph/rigraph/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul></div>
 
 
@@ -92,6 +94,7 @@ names and a vertex id will be assigned to each name, and also a
     <div class="dont-index"><p>Other deterministic constructors:
 <code><a href="graph_from_atlas.html">graph_from_atlas</a>()</code>,
 <code><a href="graph_from_literal.html">graph_from_literal</a>()</code>,
+<code><a href="make_.html">make_</a>()</code>,
 <code><a href="make_chordal_ring.html">make_chordal_ring</a>()</code>,
 <code><a href="make_empty_graph.html">make_empty_graph</a>()</code>,
 <code><a href="make_full_citation_graph.html">make_full_citation_graph</a>()</code>,
@@ -107,15 +110,15 @@ names and a vertex id will be assigned to each name, and also a
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">el</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"foo"</span>, <span class="st">"bar"</span>, <span class="st">"bar"</span>, <span class="st">"foobar"</span><span class="op">)</span>, nc <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">graph_from_edgelist</span><span class="op">(</span><span class="va">el</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IGRAPH cee0251 DN-- 3 2 -- </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IGRAPH 7778b64 DN-- 3 2 -- </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> + attr: name (v/c)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + edges from cee0251 (vertex names):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + edges from 7778b64 (vertex names):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] foo-&gt;bar    bar-&gt;foobar</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Create a ring by hand</span></span></span>
 <span class="r-in"><span><span class="fu">graph_from_edgelist</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IGRAPH 9106c33 D--- 10 10 -- </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + edges from 9106c33:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IGRAPH b7b8dee D--- 10 10 -- </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + edges from b7b8dee:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  1-&gt; 2  2-&gt; 3  3-&gt; 4  4-&gt; 5  5-&gt; 6  6-&gt; 7  7-&gt; 8  8-&gt; 9  9-&gt;10 10-&gt; 1</span>
 </code></pre></div>
     </div>
