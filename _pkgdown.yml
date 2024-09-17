@@ -3,15 +3,10 @@ url: https://r.igraph.org/
 template:
   bootstrap: 5
 
-
 navbar:
   structure:
-    left:
-    - intro
-    - reference
-    - news
-    - articles
-    right: github
+    left:  [intro, reference, articles, tutorials, news]
+    right: [search, github, lightswitch]
   components:
     intro:
       text: Get started
@@ -225,7 +220,6 @@ reference:
   - has_concept("foreign")
 - title: Interactive functions
 - contents:
-  - has_concept("socnet")
   - has_concept("tkplot")
   - has_concept("console")
 - title: Versions
@@ -234,11 +228,6 @@ reference:
 - title: internal
   contents:
   - igraph-package
-  - has_concept("test")
-  - layout.reingold.tilford
-  - layout.fruchterman.reingold.grid
-  - layout.spring
-  - layout.svd
   - "%>%"
 
 authors:

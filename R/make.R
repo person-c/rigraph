@@ -339,7 +339,8 @@ graph.lcf <- function(n , shifts , repeats = 1) { # nocov start
 #' @inheritParams make_lattice
 #' @keywords internal
 #' @export
-graph.lattice <- function(dimvector = NULL , length = NULL , dim = NULL , nei = 1 , directed = FALSE , mutual = FALSE , periodic = FALSE, circular) { # nocov start
+#' @cdocs igraph_square_lattice
+graph.lattice <- function(dimvector = NULL , length = NULL , dim = NULL , nei = 1 , directed = FALSE , mutual = FALSE , periodic = FALSE, circular = deprecated()) { # nocov start
   lifecycle::deprecate_soft("2.0.4", "graph.lattice()", "make_lattice()")
   if (is.numeric(length) && length != floor(length)) {
     warning("length was rounded to the nearest integer")
@@ -355,8 +356,17 @@ graph.lattice <- function(dimvector = NULL , length = NULL , dim = NULL , nei = 
     periodic <- circular
   }
 
+  if (is.numeric(length) && length != floor(length)) {
+    warning("length was rounded to the nearest integer")
+    length <- round(length)
+  }
+
   if (is.null(dimvector)) {
     dimvector <- rep(length, dim)
+  }
+
+  if (length(periodic) == 1) {
+    periodic <- rep(periodic, length(dimvector))
   }
 
   on.exit(.Call(R_igraph_finalizer))
@@ -366,7 +376,7 @@ graph.lattice <- function(dimvector = NULL , length = NULL , dim = NULL , nei = 
     res$dimvector <- dimvector
     res$nei <- nei
     res$mutual <- mutual
-    res$circular <- circular
+    res$circular <- periodic
   }
   res
 } # nocov end
@@ -781,8 +791,6 @@ graph.atlas <- function(n) { # nocov start
 #'
 #' @param ... Parameters, see details below.
 #'
-#' @seealso simplified with_edge_ with_graph_ with_vertex_
-#'   without_loops without_multiples
 #' @export
 #' @examples
 #' r <- make_(ring(10))
@@ -794,11 +802,19 @@ graph.atlas <- function(n) { # nocov start
 #' ran <- sample_(degseq(c(3, 3, 3, 3, 3, 3), method = "configuration"), simplified())
 #' degree(ran)
 #' is_simple(ran)
+#' @family deterministic constructors
+#' @family constructor modifiers
 make_ <- function(...) {
   me <- attr(sys.function(), "name") %||% "construct"
   extracted <- .extract_constructor_and_modifiers(..., .operation = me, .variant = "make")
   cons <- extracted$cons
-  cons_args <- if (cons$lazy) lapply(cons$args, "[[", "expr") else lazy_eval(cons$args)
+
+  if (cons$lazy) {
+    cons_args <- lapply(cons$args, rlang::quo_get_expr)
+  } else {
+    cons_args <- lapply(cons$args, rlang::eval_tidy)
+  }
+
   res <- do_call(cons$fun, cons_args, extracted$args)
   .apply_modifiers(res, extracted$mods)
 }
@@ -808,7 +824,23 @@ make_ <- function(...) {
 #' Generic function for sampling from network models.
 #'
 #' @details
-#' TODO
+#' `sample_()` is a generic function for creating graphs.
+#' For every graph constructor in igraph that has a `sample_` prefix,
+#' there is a corresponding function without the prefix: e.g.
+#' for [sample_pa()] there is also [pa()], etc.
+#'
+#' The same is true for the deterministic graph samplers, i.e. for each
+#' constructor with a `make_` prefix, there is a corresponding
+#' function without that prefix.
+#'
+#' These shorter forms can be used together with `sample_()`.
+#' The advantage of this form is that the user can specify constructor
+#' modifiers which work with all constructors. E.g. the
+#' [with_vertex_()] modifier adds vertex attributes
+#' to the newly created graphs.
+#'
+#' See the examples and the various constructor modifiers below.
+#'
 #'
 #' @param ... Parameters, see details below.
 #'
@@ -827,11 +859,18 @@ make_ <- function(...) {
 #' blocky3 <- pref_matrix %>%
 #'   sample_(sbm(), n = 20, block.sizes = c(10, 10))
 #' @family games
+#' @family constructor modifiers
 sample_ <- function(...) {
   me <- attr(sys.function(), "name") %||% "construct"
   extracted <- .extract_constructor_and_modifiers(..., .operation = me, .variant = "sample")
   cons <- extracted$cons
-  cons_args <- if (cons$lazy) lapply(cons$args, "[[", "expr") else lazy_eval(cons$args)
+
+  if (cons$lazy) {
+    cons_args <- lapply(cons$args, rlang::quo_get_expr)
+  } else {
+    cons_args <- lapply(cons$args, rlang::eval_tidy)
+  }
+
   res <- do_call(cons$fun, cons_args, extracted$args)
   .apply_modifiers(res, extracted$mods)
 }
@@ -851,10 +890,24 @@ sample_ <- function(...) {
 #' graph_(cbind(1:5, 2:6), from_edgelist(directed = FALSE))
 #' graph_(cbind(1:5, 2:6), from_edgelist(), directed = FALSE)
 graph_ <- function(...) {
+  lifecycle::deprecate_soft(
+    "2.0.4",
+    "graph_()",
+    details = c(
+      "Please use constructors directly, for instance graph_from_edgelist().",
+      "graph_() will be removed in a future version of igraph."
+    )
+  )
   me <- attr(sys.function(), "name") %||% "construct"
   extracted <- .extract_constructor_and_modifiers(..., .operation = me, .variant = "graph")
   cons <- extracted$cons
-  cons_args <- if (cons$lazy) lapply(cons$args, "[[", "expr") else lazy_eval(cons$args)
+
+  if (cons$lazy) {
+    cons_args <- lapply(cons$args, rlang::quo_get_expr)
+  } else {
+    cons_args <- lapply(cons$args, rlang::eval_tidy)
+  }
+
   res <- do_call(cons$fun, cons_args, extracted$args)
   .apply_modifiers(res, extracted$mods)
 }
@@ -867,7 +920,7 @@ constructor_spec <- function(fun, ..., .lazy = FALSE) {
   structure(
     list(
       fun = fun,
-      args = lazy_dots(...),
+      args = rlang::enquos(...),
       lazy = .lazy
     ),
     class = "igraph_constructor_spec"
@@ -1316,6 +1369,7 @@ undirected_graph <- function(...) constructor_spec(make_undirected_graph, ...)
 #' @examples
 #' make_empty_graph(n = 10)
 #' make_empty_graph(n = 5, directed = FALSE)
+#' @cdocs igraph_empty
 make_empty_graph <- empty_impl
 
 #' @rdname make_empty_graph
@@ -1670,9 +1724,10 @@ full_graph <- function(...) constructor_spec(make_full_graph, ...)
 #' @examples
 #' make_lattice(c(5, 5, 5))
 #' make_lattice(length = 5, dim = 3)
+#' @cdocs igraph_square_lattice
 make_lattice <- function(dimvector = NULL, length = NULL, dim = NULL,
                          nei = 1, directed = FALSE, mutual = FALSE,
-                         periodic = FALSE, circular) {
+                         periodic = FALSE, circular = deprecated()) {
   if (lifecycle::is_present(circular)) {
     lifecycle::deprecate_soft(
       "2.0.3",
@@ -1822,6 +1877,7 @@ make_tree <- function(n, children = 2, mode = c("out", "in", "undirected")) {
 #' g <- sample_tree(100, method = "lerw")
 #'
 #' @export
+#' @cdocs igraph_tree_game
 sample_tree <- tree_game_impl
 
 #' @rdname make_tree
@@ -1854,6 +1910,7 @@ tree <- function(...) constructor_spec(list(make = make_tree, sample = sample_tr
 #' to_prufer(g)
 #' @family trees
 #' @export
+#' @cdocs igraph_from_prufer
 make_from_prufer <- from_prufer_impl
 
 #' @rdname make_from_prufer
@@ -2175,7 +2232,7 @@ full_bipartite_graph <- function(...) constructor_spec(make_full_bipartite_graph
 #'   When the vector is a named vector, the names will be attached to the graph
 #'   as the `name` vertex attribute.
 #' @param edges A vector giving the edges of the graph, the same way as for the
-#'   regular [graph()] function. It is checked that the edges indeed
+#'   regular [make_graph()] function. It is checked that the edges indeed
 #'   connect vertices of different kind, according to the supplied `types`
 #'   vector. The vector may be a string vector if `types` is a named vector.
 #' @param directed Whether to create a directed graph, boolean constant. Note
@@ -2186,7 +2243,7 @@ full_bipartite_graph <- function(...) constructor_spec(make_full_bipartite_graph
 #'
 #'   `is_bipartite()` returns a logical scalar.
 #' @author Gabor Csardi \email{csardi.gabor@@gmail.com}
-#' @seealso [graph()] to create one-mode networks
+#' @seealso [make_graph()] to create one-mode networks
 #' @keywords graphs
 #' @family bipartite
 #' @examples
@@ -2280,7 +2337,7 @@ full_citation_graph <- function(...) constructor_spec(make_full_citation_graph, 
 #' @param repeats Integer constant, how many times to repeat the shifts.
 #' @return A graph object.
 #' @author Gabor Csardi \email{csardi.gabor@@gmail.com}
-#' @seealso [graph()] can create arbitrary graphs, see also the other
+#' @seealso [make_graph()] can create arbitrary graphs, see also the other
 #' functions on the its manual page for creating special graphs.
 #' @keywords graphs
 #' @examples
@@ -2290,6 +2347,7 @@ full_citation_graph <- function(...) constructor_spec(make_full_citation_graph, 
 #' g2 <- make_graph("Franklin")
 #' isomorphic(g1, g2)
 #' @export
+#' @cdocs igraph_lcf_vector
 graph_from_lcf <- lcf_vector_impl
 
 ## -----------------------------------------------------------------
@@ -2383,6 +2441,7 @@ graph_from_lcf <- lcf_vector_impl
 #' }
 #' g5 <- realize_degseq(degs, allowed.edge.types = "multi")
 #' all(degree(g5) == degs)
+#' @cdocs igraph_realize_degree_sequence
 realize_degseq <- realize_degree_sequence_impl
 
 
@@ -2426,6 +2485,7 @@ realize_degseq <- realize_degree_sequence_impl
 #' @examples
 #' g <- realize_bipartite_degseq(c(3, 3, 2, 1, 1), c(2, 2, 2, 2, 2))
 #' degree(g)
+#' @cdocs igraph_realize_bipartite_degree_sequence
 realize_bipartite_degseq <- function(degrees1, degrees2, ...,
                                      allowed.edge.types = c("simple", "multiple"),
                                      method = c("smallest", "largest", "index")) {

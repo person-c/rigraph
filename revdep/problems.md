@@ -1,14 +1,85 @@
-# BCT
+# isotracer
 
 <details>
 
-* Version: 1.2
+* Version: 1.1.6
 * GitHub: NA
-* Source code: https://github.com/cran/BCT
-* Date/Publication: 2022-05-12 14:00:05 UTC
-* Number of recursive dependencies: 13
+* Source code: https://github.com/cran/isotracer
+* Date/Publication: 2024-05-15 08:50:07 UTC
+* Number of recursive dependencies: 127
 
-Run `revdepcheck::cloud_details(, "BCT")` for more info
+Run `revdepcheck::cloud_details(, "isotracer")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking tests ... ERROR
+    ```
+      Running ‘testthat.R’
+    Running the tests in ‘tests/testthat.R’ failed.
+    Complete output:
+      > library(testthat)
+      > library(isotracer)
+      To automatically run isotracer in parallel on a multicore CPU, you can call:
+        options(mc.cores = parallel::detectCores())
+      
+      
+      Attaching package: 'isotracer'
+    ...
+      ══ Failed tests ════════════════════════════════════════════════════════════════
+      ── Failure ('test-steady-states-flows-pred.R:481:5'): Predictions for open network, single unit, one steady, one split ──
+      all(x[["from"]] - x[["to"]] < 1e-13) is not TRUE
+      
+      `actual`:   FALSE
+      `expected`: TRUE 
+      
+      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 582 ]
+      Error: Test failures
+      Execution halted
+    ```
+
+## In both
+
+*   checking whether package ‘isotracer’ can be installed ... WARNING
+    ```
+    Found the following significant warnings:
+      Warning: namespace ‘lubridate’ is not available and has been replaced
+    See ‘/tmp/workdir/isotracer/new/isotracer.Rcheck/00install.out’ for details.
+    ```
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is 95.1Mb
+      sub-directories of 1Mb or more:
+        R      1.5Mb
+        data   4.0Mb
+        doc    2.3Mb
+        libs  86.8Mb
+    ```
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespace in Imports field not imported from: ‘rstantools’
+      All declared Imports should be used.
+    ```
+
+*   checking for GNU extensions in Makefiles ... NOTE
+    ```
+    GNU make is a SystemRequirements.
+    ```
+
+# manynet
+
+<details>
+
+* Version: 1.0.5
+* GitHub: https://github.com/stocnet/manynet
+* Source code: https://github.com/cran/manynet
+* Date/Publication: 2024-08-30 04:50:02 UTC
+* Number of recursive dependencies: 152
+
+Run `revdepcheck::cloud_details(, "manynet")` for more info
 
 </details>
 
@@ -16,31 +87,80 @@ Run `revdepcheck::cloud_details(, "BCT")` for more info
 
 *   checking examples ... ERROR
     ```
-    Running examples in ‘BCT-Ex.R’ failed
+    Running examples in ‘manynet-Ex.R’ failed
     The error most likely occurred in:
     
-    > ### Name: draw_models
-    > ### Title: Plot the results of the BCT and kBCT functions
-    > ### Aliases: draw_models
+    > ### Name: make_generate
+    > ### Title: Making networks with a stochastic element
+    > ### Aliases: make_generate generate_random generate_configuration
+    > ###   generate_smallworld generate_scalefree generate_utilities
+    > ###   generate_fire generate_islands generate_citations
+    > ###   generate_permutation
     > 
-    > ### ** Examples
-    > 
-    > 
-    > # Use the pewee dataset as an example:
-    > q <- BCT(pewee, 5) # maximum depth of 5
-    > 
-    > draw_models(q)
-    Error in igraph::graph.lattice(length(subwords) + 1, directed = TRUE) : 
-      argument "circular" is missing, with no default
-    Calls: draw_models -> show_tree -> <Anonymous>
+    ...
+    3     3     4
+    4     3     5
+    5     4     6
+    6     6     7
+    # ℹ 3 more rows
+    > generate_islands(10)
+    Error in igraph::sample_islands(islands.n = islands, islands.size = c(table(cut(seq.int(n),  : 
+      At rinterface_extra.c:78 : Expecting a scalar integer but received a vector of length 2. Invalid value
+    Calls: generate_islands -> <Anonymous>
     Execution halted
     ```
 
 ## In both
 
-*   checking C++ specification ... NOTE
+*   checking package dependencies ... NOTE
     ```
-      Specified C++11: please drop specification unless essential
+    Package which this enhances but not available for checking: ‘Rgraphviz’
+    ```
+
+*   checking data for non-ASCII characters ... NOTE
+    ```
+      Note: found 7 marked UTF-8 strings
+    ```
+
+# MetaNet
+
+<details>
+
+* Version: 0.1.2
+* GitHub: https://github.com/Asa12138/MetaNet
+* Source code: https://github.com/cran/MetaNet
+* Date/Publication: 2024-03-25 20:40:07 UTC
+* Number of recursive dependencies: 151
+
+Run `revdepcheck::cloud_details(, "MetaNet")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking examples ... ERROR
+    ```
+    Running examples in ‘MetaNet-Ex.R’ failed
+    The error most likely occurred in:
+    
+    > ### Name: anno_vertex
+    > ### Title: Use data.frame to annotate vertexes of metanet
+    > ### Aliases: anno_vertex anno_node
+    > 
+    > ### ** Examples
+    > 
+    > data("c_net")
+    ...
+      8. │           └─igraph (local) x("width", no = can_max)
+      9. │             ├─igraph::ends(x, edges[seq_len(no)], names = names)
+     10. │             │ ├─igraph:::as_igraph_es(graph, na.omit(es))
+     11. │             │ └─stats::na.omit(es)
+     12. │             ├─edges[seq_len(no)]
+     13. │             └─igraph:::`[.igraph.es`(edges, seq_len(no))
+     14. │               └─base::lapply(...)
+     15. │                 └─rlang (local) FUN(X[[i]], ...)
+     16. └─rlang::abort(message = message)
+    Execution halted
     ```
 
 # netropy
@@ -71,23 +191,7 @@ Run `revdepcheck::cloud_details(, "netropy")` for more info
     > ### ** Examples
     > 
     > library(ggraph)
-    Loading required package: ggplot2
-    > # use internal data set
-    > data(lawdata)
-    > df.att <- lawdata[[4]]
-    > 
-    > # three steps of data editing:
-    > # 1. categorize variables 'years' and 'age' based on
-    > # approximately three equally size groups (values based on cdf)
-    > # 2. make sure all outcomes start from the value 0 (optional)
-    > # 3. remove variable 'senior' as it consists of only unique values (thus redundant)
-    > df.att.ed <- data.frame(
-    +    status   = df.att$status,
-    +    gender   = df.att$gender,
-    +    office   = df.att$office-1,
-    +    years    = ifelse(df.att$years<=3,0,
-    +               ifelse(df.att$years<=13,1,2)),
-    +    age      = ifelse(df.att$age<=35,0,
+    ...
     +                 ifelse(df.att$age<=45,1,2)),
     +    practice = df.att$practice,
     +    lawschool= df.att$lawschool-1)
@@ -134,9 +238,7 @@ Run `revdepcheck::cloud_details(, "netropy")` for more info
     --- failed re-building ‘joint_entropies.Rmd’
     
     --- re-building ‘prediction_power.Rmd’ using rmarkdown
-    --- finished re-building ‘prediction_power.Rmd’
-    
-    --- re-building ‘univariate_bivariate_trivariate.Rmd’ using rmarkdown
+    ...
     --- finished re-building ‘univariate_bivariate_trivariate.Rmd’
     
     --- re-building ‘variable_domains.Rmd’ using rmarkdown
@@ -149,17 +251,112 @@ Run `revdepcheck::cloud_details(, "netropy")` for more info
     Execution halted
     ```
 
-# tidygraph
+# R6causal
 
 <details>
 
-* Version: 1.3.1
-* GitHub: https://github.com/thomasp85/tidygraph
-* Source code: https://github.com/cran/tidygraph
-* Date/Publication: 2024-01-30 13:40:02 UTC
-* Number of recursive dependencies: 80
+* Version: 0.8.3
+* GitHub: NA
+* Source code: https://github.com/cran/R6causal
+* Date/Publication: 2024-03-14 16:10:02 UTC
+* Number of recursive dependencies: 99
 
-Run `revdepcheck::cloud_details(, "tidygraph")` for more info
+Run `revdepcheck::cloud_details(, "R6causal")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking whether package ‘R6causal’ can be installed ... WARNING
+    ```
+    Found the following significant warnings:
+      Note: possible error in '.to(l[i])': unused argument (l[i]) 
+      Note: possible error in '.from(l[i])': unused argument (l[i]) 
+    See ‘/tmp/workdir/R6causal/new/R6causal.Rcheck/00install.out’ for details.
+    Information on the location(s) of code generating the ‘Note’s can be
+    obtained by re-running with environment variable R_KEEP_PKG_SOURCE set
+    to ‘yes’.
+    ```
+
+# simcausal
+
+<details>
+
+* Version: 0.5.6
+* GitHub: https://github.com/osofr/simcausal
+* Source code: https://github.com/cran/simcausal
+* Date/Publication: 2022-10-28 11:52:27 UTC
+* Number of recursive dependencies: 83
+
+Run `revdepcheck::cloud_details(, "simcausal")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking tests ... ERROR
+    ```
+      Running ‘test-all.R’
+    Running the tests in ‘tests/test-all.R’ failed.
+    Complete output:
+      > ## unit tests will not be done if RUnit is not available
+      > # setwd("..")
+      > # getwd()
+      > # library(RUnit)
+      > if(require("RUnit", quietly=TRUE)) {
+      +     ## --- Setup ---
+      + 
+    ...
+      In addition: Warning messages:
+      1: In RNGkind(kind = testSuite$rngKind, normal.kind = testSuite$rngNormalKind) :
+        RNGkind: Marsaglia-Multicarry has poor statistical properties
+      2: In RNGkind(kind = testSuite$rngKind, normal.kind = testSuite$rngNormalKind) :
+        RNGkind: severe deviations from normality for Kinderman-Ramage + Marsaglia-Multicarry
+      3: In RNGkind(kind = testSuite$rngKind, normal.kind = testSuite$rngNormalKind) :
+        RNGkind: Marsaglia-Multicarry has poor statistical properties
+      4: In RNGkind(kind = testSuite$rngKind, normal.kind = testSuite$rngNormalKind) :
+        RNGkind: severe deviations from normality for Kinderman-Ramage + Marsaglia-Multicarry
+      Execution halted
+    ```
+
+## In both
+
+*   checking re-building of vignette outputs ... NOTE
+    ```
+    Error(s) in re-building vignettes:
+      ...
+    --- re-building ‘simcausal_vignette.Rnw’ using knitr
+    Error: processing vignette 'simcausal_vignette.Rnw' failed with diagnostics:
+    Running 'texi2dvi' on 'simcausal_vignette.tex' failed.
+    LaTeX errors:
+    ! LaTeX Error: File `colortbl.sty' not found.
+    
+    Type X to quit or <RETURN> to proceed,
+    or enter new name. (Default extension: sty)
+    ...
+    l.55 \RequirePackage
+                        [T1]{fontenc}^^M
+    !  ==> Fatal error occurred, no output PDF file produced!
+    --- failed re-building ‘simcausal_vignette.Rnw’
+    
+    SUMMARY: processing the following file failed:
+      ‘simcausal_vignette.Rnw’
+    
+    Error: Vignette re-building failed.
+    Execution halted
+    ```
+
+# skynet
+
+<details>
+
+* Version: 1.4.3
+* GitHub: https://github.com/ropensci/skynet
+* Source code: https://github.com/cran/skynet
+* Date/Publication: 2022-06-17 13:00:02 UTC
+* Number of recursive dependencies: 98
+
+Run `revdepcheck::cloud_details(, "skynet")` for more info
 
 </details>
 
@@ -170,91 +367,31 @@ Run `revdepcheck::cloud_details(, "tidygraph")` for more info
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     Complete output:
-      > # This file is part of the standard setup for testthat.
-      > # It is recommended that you do not modify it.
-      > #
-      > # Where should you do additional test configuration?
-      > # Learn more about the roles of various files in:
-      > # * https://r-pkgs.org/testing-design.html#sec-tests-files-overview
-      > # * https://testthat.r-lib.org/articles/special-files.html
-      > 
       > library(testthat)
-      > library(tidygraph)
-      
-      Attaching package: 'tidygraph'
-      
-      The following object is masked from 'package:testthat':
-      
-          matches
-      
-      The following object is masked from 'package:stats':
-      
-          filter
-      
+      > library(skynet)
       > 
-      > test_check("tidygraph")
-      Ungrouping `.data`...
-      Splitting by nodes
-      Unfocusing graph...
-      `focus()` selected all nodes. Returning unfocused graph
-      `focus()` didn't select any nodes. Returning unfocused graph
-      Unfocusing graph...
-      Unfocusing prior to grouping
-      Unfocusing prior to morphing
-      Unfocusing graph...
-      Joining with `by = join_by(from, to)`
-      Joining with `by = join_by(from, to)`
-      Joining with `by = join_by(from, to)`
-      Joining with `by = join_by(from, to)`
-      Joining with `by = join_by(from, to)`
-      Joining with `by = join_by(from, to)`
-      Ungrouping `.data`...
-      Subsetting by nodes
-      Splitting by nodes
-      Unfocusing prior to morphing
-      [ FAIL 13 | WARN 9 | SKIP 1 | PASS 426 ]
+      > test_check("skynet")
+      [ FAIL 1 | WARN 24 | SKIP 4 | PASS 69 ]
       
-      ══ Skipped tests (1) ═══════════════════════════════════════════════════════════
-      • On CRAN (1): 'test-random-walk.R:19:3'
+      ══ Skipped tests (4) ═══════════════════════════════════════════════════════════
+    ...
+       14. │   └─base::lapply(...)
+       15. │     └─rlang (local) FUN(X[[i]], ...)
+       16. └─igraph (local) from(V(x)[y])
+       17.   └─lifecycle::deprecate_stop("2.0.4", "from()", ".from()")
+       18.     └─lifecycle:::deprecate_stop0(msg)
+       19.       └─rlang::cnd_signal(...)
       
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Error ('test-graph_measures.R:17:3'): graph measures returns scalars ────────
-      Error in `radius_dijkstra_impl(graph, weights = weights, mode = mode)`: At vendor/cigraph/src/paths/distances.c:328 : Weight vector length (1) does not match number of edges (8). Invalid value
-      Backtrace:
-          ▆
-       1. ├─testthat::expect_length(graph_radius(), 1) at test-graph_measures.R:17:3
-       2. │ └─testthat::quasi_label(enquo(object), arg = "object")
-       3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
-       4. └─tidygraph::graph_radius()
-       5.   └─igraph::radius(graph, mode)
-       6.     └─igraph:::radius_dijkstra_impl(graph, weights = weights, mode = mode)
-      ── Failure ('test-graph_measures.R:32:1'): graph context is empty after test ───
-      environment(.graph_context$free)$private$context has length 1, not length 0.
-      ── Failure ('test-group.R:92:1'): graph context is empty after test ────────────
-      environment(.graph_context$free)$private$context has length 1, not length 0.
-      ── Failure ('test-group_by.R:15:1'): graph context is empty after test ─────────
-      environment(.graph_context$free)$private$context has length 1, not length 0.
-      ── Failure ('test-local.R:37:1'): graph context is empty after test ────────────
-      environment(.graph_context$free)$private$context has length 1, not length 0.
-      ── Failure ('test-morph.R:135:1'): graph context is empty after test ───────────
-      environment(.graph_context$free)$private$context has length 1, not length 0.
-      ── Failure ('test-mutate.R:15:1'): graph context is empty after test ───────────
-      environment(.graph_context$free)$private$context has length 1, not length 0.
-      ── Failure ('test-node_measures.R:78:1'): graph context is empty after test ────
-      environment(.graph_context$free)$private$context has length 1, not length 0.
-      ── Failure ('test-node_types.R:58:1'): graph context is empty after test ───────
-      environment(.graph_context$free)$private$context has length 1, not length 0.
-      ── Failure ('test-pair_measures.R:58:1'): graph context is empty after test ────
-      environment(.graph_context$free)$private$context has length 1, not length 0.
-      ── Failure ('test-search.R:58:1'): graph context is empty after test ───────────
-      environment(.graph_context$free)$private$context has length 1, not length 0.
-      ── Failure ('test-slice.R:27:1'): graph context is empty after test ────────────
-      environment(.graph_context$free)$private$context has length 1, not length 0.
-      ── Failure ('test-tidyr-utils.R:18:1'): graph context is empty after test ──────
-      environment(.graph_context$free)$private$context has length 1, not length 0.
-      
-      [ FAIL 13 | WARN 9 | SKIP 1 | PASS 426 ]
+      [ FAIL 1 | WARN 24 | SKIP 4 | PASS 69 ]
       Error: Test failures
       Execution halted
+    ```
+
+## In both
+
+*   checking dependencies in R code ... NOTE
+    ```
+    Namespace in Imports field not imported from: ‘maps’
+      All declared Imports should be used.
     ```
 

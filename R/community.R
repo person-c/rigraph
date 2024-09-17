@@ -707,12 +707,12 @@ modularity.communities <- function(x, ...) {
 
 #' @rdname modularity.igraph
 #' @export
-modularity_matrix <- function(graph, membership, weights = NULL, resolution = 1, directed = TRUE) {
+modularity_matrix <- function(graph, membership = lifecycle::deprecated(), weights = NULL, resolution = 1, directed = TRUE) {
   # Argument checks
   ensure_igraph(graph)
 
   if (!missing(membership)) {
-    warning("The membership argument is deprecated; modularity_matrix does not need it")
+    lifecycle::deprecate_warn("2.0.4", "modularity_matrix(membership = 'is no longer used')")
   }
 
   if (is.null(weights) && "weight" %in% edge_attr_names(graph)) {
@@ -2794,6 +2794,7 @@ communities <- groups.communities
 #'
 #' @export
 #' @family functions for manipulating graph structure
+#' @cdocs igraph_contract_vertices
 contract <- contract_vertices_impl
 
 
@@ -2835,4 +2836,5 @@ contract <- contract_vertices_impl
 #'
 #' @export
 #' @family community
+#' @cdocs igraph_voronoi
 voronoi_cells <- voronoi_impl

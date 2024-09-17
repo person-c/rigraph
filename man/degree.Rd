@@ -65,7 +65,7 @@ its adjacent edges.
 g <- make_ring(10)
 degree(g)
 g2 <- sample_gnp(1000, 10 / 1000)
-max_degree(g)
+max_degree(g2)
 degree_distribution(g2)
 
 }
@@ -100,3 +100,5 @@ Gabor Csardi \email{csardi.gabor@gmail.com}
 }
 \concept{structural.properties}
 \keyword{graphs}
+\section{Related documentation in the C library}{\href{https://igraph.org/c/html/latest/igraph-Structural.html#igraph_maxdegree}{\code{igraph_maxdegree()}}.}
+

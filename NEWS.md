@@ -1,5 +1,210 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# igraph 2.0.3.9059
+
+## Chore
+
+- Replace `is.directed()` with `is_directed()` in stimulus YAML (#1494).
+
+- Soft-deprecate `graph_()` (#1493).
+
+## Documentation
+
+- Expand on `fit_power_law(implementation = "plfit.p")` (#1503).
+
+## doc
+
+- Improve centralization docs.
+
+
+# igraph 2.0.3.9058
+
+## Chore
+
+- Remove useless igraph_test() and igraphtest() functions as we … (#1501).
+
+- Use lifecycle for deprecation of membership argument of modula… (#1498).
+
+- Properly deprecate some functions in layout.R (#1500).
+
+- Remove references to deprecated functions (#1497).
+
+## Documentation
+
+- Add more cdocs tags (#1491).
+
+
+# igraph 2.0.3.9057
+
+## Documentation
+
+- Document how to run document().
+
+  thx @szhorvat
+
+
+# igraph 2.0.3.9056
+
+## doc
+
+- Further clarifications for betweenness().
+  ref #1489
+
+- Clarify how betweenness with cutoff is normalized.
+  ref #1489
+
+- Fix centr_eigen_tmax() docs.
+
+
+# igraph 2.0.3.9055
+
+## Chore
+
+- Increase cpp11 minimal version (#1490).
+
+
+# igraph 2.0.3.9054
+
+## Bug fixes
+
+- Add ellipsis to dummy functions `.nei()` and others (#1487).
+
+## Features
+
+- Breaking change: remove tkigraph from {igraph} proper (#1474).
+
+## Chore
+
+- Results for revdepcheck (#1488).
+
+## Documentation
+
+- Add a custom roxygen2 cdocs tag (#1484).
+
+## Breaking changes
+
+- Breaking change: remove tkigraph from {igraph} proper (#1474).
+
+
+# igraph 2.0.3.9053
+
+## Chore
+
+- Add some argument checking to `add_shape()` (#1478).
+
+## Testing
+
+- Remove useless snapshot (#1481).
+
+
+# igraph 2.0.3.9052
+
+## Bug fixes
+
+- Fix includig diagonal elements in dense adjacency matrices (#1437).
+
+
+# igraph 2.0.3.9051
+
+## Documentation
+
+- Improve the manual page of sample\_() (#1477).
+
+- Improve cross-links from make\_() manual page (#1476).
+
+- Update is_separator() documentation based on C docs (#1467).
+
+## Refactoring
+
+- Remove lazyeval usage in `[.igraph.vs` (#1445).
+
+## Testing
+
+- Improve hits tests (#1458).
+
+- Slightly refactor test.print.R for readability (#1463).
+
+
+# igraph 2.0.3.9050
+
+## Features
+
+- Support `fit_power_law(implementation = "plfit.p")` to compute the P-value (#1386).
+
+## Refactoring
+
+- Drop attributes in a more straightforward fashion in `graphlet_basis()` (#1452).
+
+
+# igraph 2.0.3.9049
+
+## Chore
+
+- Fix TODO related to missing citation (#1450).
+
+## Documentation
+
+- Fix navbar configuration (#1451).
+
+- Add DOI to citation.
+
+  https://github.com/igraph/rigraph/pull/1450#issuecomment-2298455032
+
+  cc @szhorvat
+
+## Testing
+
+- Remove non actionable comment (#1469).
+
+- Remove TODO as several tests use the index argument (#1457).
+
+- Add tests for special subsetting functions (#1456).
+
+- Improve HITS test (#1449).
+
+
+# igraph 2.0.3.9048
+
+## Bug fixes
+
+- Align the body of `graph.lattice()` with its replacement `make_lattice()` (#1439).
+
+## Features
+
+- Export `.from()` etc. with behavior similar to `dplyr::across()` (#1436).
+
+## Refactoring
+
+- Remove lazyeval usage from R/make.R (#1441).
+
+## Testing
+
+- Add test for hits_scores() directly (#1444).
+
+
+# igraph 2.0.3.9047
+
+## Chore
+
+- Rerun revdepcheck.
+
+- Update revdepcheck results.
+
+
+# igraph 2.0.3.9046
+
+## Bug fixes
+
+- Use deprecated() as default value for 'circular' argument (#1431).
+
+
+# igraph 2.0.3.9045
+
+## Chore
+
+- Update revdepcheck results.
+
+
 # igraph 2.0.3.9044
 
 ## Bug fixes

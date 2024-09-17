@@ -255,9 +255,15 @@ betweenness.estimate <- estimate_betweenness
 #'   scores. If `TRUE`, then the results are normalized by the number of ordered
 #'   or unordered vertex pairs in directed and undirected graphs, respectively.
 #'   In an undirected graph,
-#'   \deqn{B^n=\frac{2B}{(n-1)(n-2)},}{Bnorm=2*B/((n-1)*(n-2)),} where
-#'   \eqn{B^n}{Bnorm} is the normalized, \eqn{B} the raw betweenness, and \eqn{n}
-#'   is the number of vertices in the graph.
+#'   \deqn{B^n=\frac{2B}{(n-1)(n-2)},}{Bnorm=2 B / ((n-1)(n-2)),}
+#'   where
+#'   \eqn{B^n}{Bnorm} is the normalized, \eqn{B} the raw betweenness, and
+#'   \eqn{n} is the number of vertices in the graph. Note that the same
+#'   normalization factor is used even when setting a `cutoff` on the considered
+#'   shortest path lengths, even though the number of vertex pairs reachable
+#'   from each other may be less than \eqn{(n-1)(n-2)/2}.
+#' @param cutoff The maximum shortest path length to consider when calculating
+#'   betweenness. If negative, then there is no such limit.
 #' @return A numeric vector with the betweenness score for each vertex in
 #'   `v` for `betweenness()`.
 #'
@@ -270,9 +276,11 @@ betweenness.estimate <- estimate_betweenness
 #' @seealso [closeness()], [degree()], [harmonic_centrality()]
 #' @references Freeman, L.C. (1979). Centrality in Social Networks I:
 #' Conceptual Clarification. *Social Networks*, 1, 215-239.
+#' \doi{10.1016/0378-8733(78)90021-7}
 #'
 #' Ulrik Brandes, A Faster Algorithm for Betweenness Centrality. *Journal
 #' of Mathematical Sociology* 25(2):163-177, 2001.
+#' \doi{10.1080/0022250X.2001.9990249}
 #' @family centrality
 #' @export
 #' @keywords graphs
@@ -282,8 +290,6 @@ betweenness.estimate <- estimate_betweenness
 #' betweenness(g)
 #' edge_betweenness(g)
 #'
-#' @param cutoff The maximum path length to consider when calculating the
-#'   betweenness. If zero or negative then there is no such limit.
 betweenness <- function(graph, v = V(graph), directed = TRUE, weights = NULL,
                         normalized = FALSE, cutoff = -1) {
   ensure_igraph(graph)
@@ -981,6 +987,7 @@ eigen_defaults <- function() {
 #' eigen_centrality(g)
 #' @family centrality
 #' @export
+#' @cdocs igraph_eigenvector_centrality
 eigen_centrality <- function(graph,
                              directed = FALSE,
                              scale = TRUE,
@@ -1039,6 +1046,7 @@ eigen_centrality <- function(graph,
 #' strength(g)
 #' @family centrality
 #' @export
+#' @cdocs igraph_strength
 strength <- strength_impl
 
 
@@ -1082,6 +1090,7 @@ strength <- strength_impl
 #' diversity(g3)
 #' @family centrality
 #' @export
+#' @cdocs igraph_diversity
 diversity <- diversity_impl
 
 
@@ -1112,7 +1121,8 @@ diversity <- diversity_impl
 #'   [arpack()] for details.
 #' @inheritParams rlang::args_dots_empty
 #' @return A named list with members:
-#'   \item{vector}{The hub or authority scores of the vertices.}
+#'   \item{hub}{The hub score of the vertices.}
+#'   \item{authority}{The authority score of the vertices.}
 #'   \item{value}{The corresponding eigenvalue of the calculated
 #'     principal eigenvector.}
 #'   \item{options}{Some information about the ARPACK computation, it has
@@ -1136,6 +1146,7 @@ diversity <- diversity_impl
 #' g2 <- make_ring(10)
 #' hits_scores(g2)
 #' @family centrality
+#' @cdocs igraph_hub_and_authority_scores
 hits_scores <- function(graph, ..., scale=TRUE, weights=NULL, options=arpack_defaults()) {
 
   rlang::check_dots_empty()
@@ -1292,6 +1303,7 @@ hub_score <- function(graph, scale=TRUE, weights=NULL, options=arpack_defaults()
 #' page_rank(g3, personalized = reset)$vector
 #' @family centrality
 #' @export
+#' @cdocs igraph_personalized_pagerank
 page_rank <- personalized_pagerank_impl
 
 #' Harmonic centrality of vertices
@@ -1339,6 +1351,7 @@ page_rank <- personalized_pagerank_impl
 #' harmonic_centrality(g2, mode = "out")
 #' harmonic_centrality(g %du% make_full_graph(5), mode = "all")
 #'
+#' @cdocs igraph_harmonic_centrality_cutoff
 harmonic_centrality <- harmonic_centrality_cutoff_impl
 
 

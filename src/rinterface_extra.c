@@ -4796,7 +4796,7 @@ SEXP R_igraph_get_adjacency(SEXP graph, SEXP ptype, SEXP pweights, SEXP ploops) 
   igraph_t g;
   igraph_matrix_t res;
   igraph_integer_t type=(igraph_integer_t) REAL(ptype)[0];
-  igraph_bool_t loops=LOGICAL(ploops)[0];
+  igraph_loops_t loops = (igraph_loops_t) INTEGER(ploops)[0];
   igraph_vector_t weights;
   SEXP result;
 
@@ -8329,6 +8329,60 @@ SEXP R_igraph_incident_edges(SEXP pgraph, SEXP pe, SEXP pmode) {
 
   UNPROTECT(1);
   return result;
+}
+
+SEXP R_igraph_power_law_fit_new(SEXP data, SEXP xmin, SEXP force_continuous, SEXP compute_pvalue)
+{
+  igraph_vector_t c_data;
+  igraph_plfit_result_t c_res;
+  igraph_real_t c_xmin;
+  igraph_bool_t c_force_continuous, c_compute_pvalue;
+  SEXP result, names;
+
+  SEXP r_result;
+
+  R_SEXP_to_vector(data, &c_data);
+  IGRAPH_R_CHECK_REAL(xmin);
+  c_xmin = REAL(xmin)[0];
+  IGRAPH_R_CHECK_BOOL(force_continuous);
+  c_force_continuous = LOGICAL(force_continuous)[0];
+  IGRAPH_R_CHECK_BOOL(compute_pvalue);
+  c_compute_pvalue = LOGICAL(compute_pvalue)[0];
+
+  // Can't use the generated `R_igraph_power_law_fit()` because we need `c_res` to compute the p-value
+  IGRAPH_R_CHECK(igraph_power_law_fit(&c_data, &c_res, c_xmin, c_force_continuous));
+
+  if (c_compute_pvalue) {
+    igraph_real_t p;
+    igraph_plfit_result_calculate_p_value(&c_res, &p, 0.001);
+
+    PROTECT(result=NEW_LIST(6));
+    PROTECT(names=NEW_CHARACTER(6));
+
+    SET_VECTOR_ELT(result, 5, Rf_ScalarReal(p));
+    SET_STRING_ELT(names, 5, Rf_mkChar("KS.p"));
+  } else {
+    PROTECT(result=NEW_LIST(5));
+    PROTECT(names=NEW_CHARACTER(5));
+  }
+
+  SET_VECTOR_ELT(result, 0, Rf_ScalarLogical(c_res.continuous));
+  SET_VECTOR_ELT(result, 1, Rf_ScalarReal(c_res.alpha));
+  SET_VECTOR_ELT(result, 2, Rf_ScalarReal(c_res.xmin));
+  SET_VECTOR_ELT(result, 3, Rf_ScalarReal(c_res.L));
+  SET_VECTOR_ELT(result, 4, Rf_ScalarReal(c_res.D));
+
+  SET_STRING_ELT(names, 0, Rf_mkChar("continuous"));
+  SET_STRING_ELT(names, 1, Rf_mkChar("alpha"));
+  SET_STRING_ELT(names, 2, Rf_mkChar("xmin"));
+  SET_STRING_ELT(names, 3, Rf_mkChar("logLik"));
+  SET_STRING_ELT(names, 4, Rf_mkChar("KS.stat"));
+  SET_NAMES(result, names);
+
+  r_result = result;
+
+  UNPROTECT(2);
+  return(r_result);
 }
 
 /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++C */

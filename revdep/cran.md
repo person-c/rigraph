@@ -1,16 +1,22 @@
 ## revdepcheck results
 
-We checked 833 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+We checked 851 reverse dependencies (846 from CRAN + 5 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 3 new problems
- * We failed to check 25 packages
+ * We saw 7 new problems
+ * We failed to check 28 packages
 
 Issues with CRAN packages are summarised below.
 
 ### New problems
 (This reports the first line of each new failure)
 
-* BCT
+* isotracer
+  checking tests ... ERROR
+
+* manynet
+  checking examples ... ERROR
+
+* MetaNet
   checking examples ... ERROR
 
 * netropy
@@ -18,33 +24,42 @@ Issues with CRAN packages are summarised below.
   checking running R code from vignettes ... ERROR
   checking re-building of vignette outputs ... NOTE
 
-* tidygraph
+* R6causal
+  checking whether package ‘R6causal’ can be installed ... WARNING
+
+* simcausal
+  checking tests ... ERROR
+
+* skynet
   checking tests ... ERROR
 
 ### Failed to check
 
-* Canek         (NA)
-* CARBayes      (NA)
-* ClustAssess   (NA)
-* clustree      (NA)
-* conos         (NA)
-* countland     (NA)
-* datapack      (NA)
-* DIscBIO       (NA)
-* dyngen        (NA)
-* evolqg        (NA)
-* manet         (NA)
-* metadat       (NA)
-* MetaNet       (NA)
-* mlmts         (NA)
-* multinma      (NA)
-* netcmc        (NA)
-* NetworkChange (NA)
-* pagoda2       (NA)
-* pcutils       (NA)
-* robber        (NA)
-* rTwig         (NA)
-* scDiffCom     (NA)
-* SignacX       (NA)
-* streamDAG     (NA)
-* treefit       (NA)
+* bsub                  (NA)
+* CARBayes              (NA)
+* chemodiv              (NA)
+* CNVScope              (NA)
+* ConnectednessApproach (NA)
+* conos                 (NA)
+* crosstalkr            (NA)
+* datapack              (NA)
+* DrugSim2DR            (NA)
+* DRviaSPCN             (NA)
+* easybgm               (NA)
+* erah                  (NA)
+* evolqg                (NA)
+* frechet               (NA)
+* GALLO                 (NA)
+* manet                 (NA)
+* mlmts                 (NA)
+* multinma              (NA)
+* netcmc                (NA)
+* NetworkChange         (NA)
+* ohun                  (NA)
+* pagoda2               (NA)
+* rTwig                 (NA)
+* Seurat                (NA)
+* speakeasyR            (NA)
+* streamDAG             (NA)
+* SubtypeDrug           (NA)
+* topologyGSA           (NA)

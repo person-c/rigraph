@@ -155,7 +155,7 @@ get.adjedgelist <- function(graph, mode = c("all", "out", "in", "total"), loops 
 ###################################################################
 
 get.adjacency.dense <- function(graph, type = c("both", "upper", "lower"),
-                                attr = NULL, weights = NULL, loops = FALSE, names = TRUE) {
+                                attr = NULL, weights = NULL, loops = c("once", "twice", "ignore"), names = TRUE) {
   ensure_igraph(graph)
 
   type <- igraph.match.arg(type)
@@ -165,13 +165,27 @@ get.adjacency.dense <- function(graph, type = c("both", "upper", "lower"),
     "both" = 2
   )
 
+  if (is.logical(loops)) {
+    loops <- ifelse(loops, "once", "ignore")
+    lifecycle::deprecate_soft(
+      "2.0.4", "get.adjacency.dense(loops = 'must be a character')",
+      details = sprintf("Converting to get.adjacency.dense (loops = '%s')", loops)
+    )
+  }
+  loops <- igraph.match.arg(loops)
+  loops <- switch(loops,
+    "ignore" = 0L,
+    "twice" = 1L,
+    "once" = 2L
+  )
+
   if (!is.null(weights)) weights <- as.numeric(weights)
 
   if (is.null(attr)) {
     on.exit(.Call(R_igraph_finalizer))
     res <- .Call(
       R_igraph_get_adjacency, graph, as.numeric(type), weights,
-      as.logical(loops)
+      loops
     )
   } else {
     attr <- as.character(attr)
@@ -348,7 +362,7 @@ as_adjacency_matrix <- function(graph, type = c("both", "upper", "lower"),
   if (sparse) {
     get.adjacency.sparse(graph, type = type, attr = attr, names = names)
   } else {
-    get.adjacency.dense(graph, type = type, attr = attr, weights = NULL, names = names)
+    get.adjacency.dense(graph, type = type, attr = attr, weights = NULL, names = names, loops = "once")
   }
 }
 
@@ -477,6 +491,7 @@ as_edgelist <- function(graph, names = TRUE) {
 #' )
 #' print(ug4, e = TRUE)
 #'
+#' @cdocs igraph_to_directed
 as.directed <- to_directed_impl
 
 #' @rdname as.directed
@@ -638,7 +653,7 @@ as_adj_edge_list <- function(graph,
 #' @return `graph_from_graphnel()` returns an igraph graph object.
 #' @seealso [as_graphnel()] for the other direction,
 #' [as_adj()], [graph_from_adjacency_matrix()],
-#' [as_adj_list()] and [graph.adjlist()] for other
+#' [as_adj_list()] and [graph_from_adj_list()] for other
 #' graph representations.
 #' @examplesIf rlang::is_installed("graph")
 #' ## Undirected
@@ -727,7 +742,7 @@ graph_from_graphnel <- function(graphNEL, name = TRUE, weight = TRUE,
 #' @return `as_graphnel()` returns a graphNEL graph object.
 #' @seealso [graph_from_graphnel()] for the other direction,
 #' [as_adj()], [graph_from_adjacency_matrix()],
-#' [as_adj_list()] and [graph.adjlist()] for
+#' [as_adj_list()] and [graph_from_adj_list()] for
 #' other graph representations.
 #'
 #' @examplesIf rlang::is_installed("graph")
@@ -1093,6 +1108,7 @@ as_data_frame <- function(x, what = c("edges", "vertices", "both")) {
 #' which_multiple(g3)
 #' @family conversion
 #' @export
+#' @cdocs igraph_adjlist
 graph_from_adj_list <- adjlist_impl
 
 
